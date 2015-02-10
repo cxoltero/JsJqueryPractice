@@ -19,4 +19,22 @@ var submitAnswers = function(){
 	}
 
 	//Set correct Answers
+	var answers = ["b", "a", "d", "b", "d"];
+
+	// check answers
+
+
+	for(var i=1; i<=total; i++){
+		if(eval('q'+i) === answers[i-1] ){
+			score++;
+		}
+	}
+
+	// Display results in page
+	var results = document.getElementById("results");
+	results.innerHTML='<h3>You scored <span>'+score+'</span> out of <span>'+total+'</span></h3>';
+	return false;
+
+	alert("You Scored "+ score +" Questions Right!" + " out of "+total);
+
 }
