@@ -113,7 +113,50 @@ var nextPage = function(){
 	);
 }
 
+// previous page function
 
+var prevPage = function(){
+
+	var token = $("#prev-button").data('token');
+	var q = $("#prev-button").data('query');
+
+
+		// clear results
+	$('#results').html('');
+	$('#buttons').html('');
+
+	// get form input
+	q = $("#query").val();
+
+	// creat a get request for youtube
+	$.get(
+		"https://www.googleapis.com/youtube/v3/search", {
+			part: 'snippet, id',
+			q: q,
+			pageToken: token,
+			type: 'video',
+			key: 'AIzaSyAX9eJzUXTP6OVeK1HJ6VRr7gD1GLf3b3M'},
+			function(data){
+				var nextPageToken = data.nextPageToken;
+				var prevPageToken = data.prevPageToken;
+
+				console.log(data);
+				$.each(data.items, function(i, item){
+					// Get output
+					var output = getOutput(item);
+
+					// Display Results
+					$('#results').append(output);
+				});
+
+				var buttons = getButtons(prevPageToken, nextPageToken);
+
+				// display buttons
+
+				$("#buttons").append(buttons);
+			}
+	);
+}
 
 
 
