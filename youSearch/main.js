@@ -48,7 +48,7 @@ var search = function(){
 			key: 'AIzaSyAX9eJzUXTP6OVeK1HJ6VRr7gD1GLf3b3M'},
 			function(data){
 				var nextPageToken = data.nextPageToken;
-				var previousPageToken = data.previousPageToken;
+				var prevPageToken = data.prevPageToken;
 
 				console.log(data);
 				$.each(data.items, function(i, item){
@@ -59,7 +59,7 @@ var search = function(){
 					$('#results').append(output);
 				});
 
-				var buttons = getButtons(previousPageToken, nextPageToken);
+				var buttons = getButtons(prevPageToken, nextPageToken);
 
 				// display buttons
 
@@ -68,6 +68,56 @@ var search = function(){
 	);
 }
 
+// next page function
+
+var nextPage = function(){
+
+	var token = $("#next-button").data('token');
+	var q = $("#next-button").data('query');
+
+
+		// clear results
+	$('#results').html('');
+	$('#buttons').html('');
+
+	// get form input
+	q = $("#query").val();
+
+	// creat a get request for youtube
+	$.get(
+		"https://www.googleapis.com/youtube/v3/search", {
+			part: 'snippet, id',
+			q: q,
+			pageToken: token,
+			type: 'video',
+			key: 'AIzaSyAX9eJzUXTP6OVeK1HJ6VRr7gD1GLf3b3M'},
+			function(data){
+				var nextPageToken = data.nextPageToken;
+				var prevPageToken = data.prevPageToken;
+
+				console.log(data);
+				$.each(data.items, function(i, item){
+					// Get output
+					var output = getOutput(item);
+
+					// Display Results
+					$('#results').append(output);
+				});
+
+				var buttons = getButtons(prevPageToken, nextPageToken);
+
+				// display buttons
+
+				$("#buttons").append(buttons);
+			}
+	);
+}
+
+
+
+
+
+// funtcion to get output
 var getOutput = function(item){
 	var videoId = item.id.videoId;
 	var title = item.snippet.title;
@@ -93,17 +143,17 @@ var getOutput = function(item){
 }
 
 // build the next and prev buttons
-var getButtons = function(previousPageToken, nextPageToken){
-	if(previousPageToken){
+var getButtons = function(prevPageToken, nextPageToken){
+	if(!prevPageToken){
 		var btnOutput = '<div class="btn-container">'+
 						'<button id="next-button" class="paging-button" data-token="'+ nextPageToken +'" data-query="'+ q +'"'+
 						'onclick="nextPage();">Next Page</button></div>';
 	}else{
-		var btnOutput = '<div class="btn-container"'+
-						'<button id="previous-button" class="paging-button" data-token="'+ previousPageToken +'" data-query="'+ q +'"'+
-						'onclick="prevPage();">Prev Page</button>'+
-						'<button id="next-button" class="paging-button" data-token="'+ nextPageToken +'" data-query="'+ q +'"'+
-						'onclick="nextPage();">Next Page</button></div>';
+		var btnOutput = '<div class="btn-container">'+
+				'<button id="prev-button" class="paging-button" data-token="'+ prevPageToken +'" data-query="'+ q +'"'+
+				'onclick="prevPage();">Prev Page</button>'+
+				'<button id="next-button" class="paging-button" data-token="'+ nextPageToken +'" data-query="'+ q +'"'+
+				'onclick="nextPage();">Next Page</button></div>';
 	}
 
 	return btnOutput;

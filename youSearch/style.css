@@ -134,3 +134,16 @@ footer{
 .cTitle{
 	color: #dd2826;
 }
+
+.btn-container{
+	margin-top: 25px;
+}
+
+.paging-button{
+	background: #ccc;
+	padding: 8px 13px;
+	border: #ccc 1px solid;
+	border-radius: 5px;
+	color: #333;
+	cursor: pointer;
+}
