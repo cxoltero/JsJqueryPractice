@@ -37,7 +37,7 @@ var search = function(){
 	$('#buttons').html('');
 
 	// get form input
-	var q = $("#query").val();
+	q = $("#query").val();
 
 	// creat a get request for youtube
 	$.get(
@@ -57,8 +57,54 @@ var search = function(){
 
 					// Display Results
 					$('#results').append(output);
-
 				});
+
+				var buttons = getButtons(previousPageToken, nextPageToken);
+
+				// display buttons
+
+				$("#buttons").append(buttons);
 			}
 	);
+}
+
+var getOutput = function(item){
+	var videoId = item.id.videoId;
+	var title = item.snippet.title;
+	var description = item.snippet.description;
+	var thumb = item.snippet.thumbnails.high.url;
+	var channelTitle = item.snippet.channelTitle;
+	var videoDate = item.snippet.publishedAt;
+
+	// build outpu string;
+	var output = '<li>' + 
+			   	 '<div class="list-left">' +
+			   	 '<img src="' + thumb +'">' + 
+			   	 '</div>' + 
+			   	 '<div class="list-right">' + 
+			   	 '<h3>' + title + '</h3>' +
+			   	 '<small>By<span class="cTitle"'+ channelTitle + '</span> on ' + videoDate + '</small>' +
+			   	 '<p>' + description + '</p>'+
+			   	 '</div>'+'</li>'+
+				  '<div class= "clearfix"></div>'+
+				  '';
+	
+	return output;
+}
+
+// build the next and prev buttons
+var getButtons = function(previousPageToken, nextPageToken){
+	if(previousPageToken){
+		var btnOutput = '<div class="btn-container">'+
+						'<button id="next-button" class="paging-button" data-token="'+ nextPageToken +'" data-query="'+ q +'"'+
+						'onclick="nextPage();">Next Page</button></div>';
+	}else{
+		var btnOutput = '<div class="btn-container"'+
+						'<button id="previous-button" class="paging-button" data-token="'+ previousPageToken +'" data-query="'+ q +'"'+
+						'onclick="prevPage();">Prev Page</button>'+
+						'<button id="next-button" class="paging-button" data-token="'+ nextPageToken +'" data-query="'+ q +'"'+
+						'onclick="nextPage();">Next Page</button></div>';
+	}
+
+	return btnOutput;
 }
