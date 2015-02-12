@@ -172,7 +172,7 @@ var getOutput = function(item){
 	// build outpu string;
 	var output = '<li>' + 
 			   	 '<div class="list-left">' +
-			   	 '<img src="' + thumb +'">' + 
+			   	 '<a class="fancybox fancybox.iframe" href="http://www.youtube.com/embed/'+videoId+'">'+ '<img src="' + thumb +'"></a>' + 
 			   	 '</div>' + 
 			   	 '<div class="list-right">' + 
 			   	 '<h3>' + title + '</h3>' +
