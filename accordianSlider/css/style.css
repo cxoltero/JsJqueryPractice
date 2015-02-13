@@ -1,3 +1,55 @@
-body, html {
+*{
+	margin: 0;
+	padding: 0;
+}
 
+body, html{
+	font-family: 'Tahoma', sans-serif;
+	color: #666;
+	font-size: 16px;
+}
+
+ul, li{
+	list-style: none;
+}
+
+#container{
+	width: 60%;
+	margin: 30px auto;
+	overflow: auto;
+}
+
+h1{
+	text-align: center;
+	margin-bottom: 20px;
+
+}
+
+.title{
+	height: 40px;
+	background: #6bb870;
+	color: #fff;
+	text-align: center;
+	padding-top: 13px;
+}
+
+.faq li{
+	padding: 20px;
+}
+
+.faq li.q{
+	backgroun: #eee;
+	font-weight: bold;
+	font-size: 120%;
+	border-bottom: 1px #ddd solid;
+	cursor: pointer;
+}
+
+.faq li.a{
+	background: #ddd;
+	display: none;
+}
+img{
+	height: 16px;
+	width: auto;
 }
